@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { PiArrowsInLineHorizontal } from "react-icons/pi";
+import { PiArrowsInLineHorizontal ,PiArrowsInLineVertical, PiTextAa } from "react-icons/pi";
 
 interface ActionButton {
     label: string,
@@ -7,7 +7,7 @@ interface ActionButton {
     buttonAction: () => void
 }
 
-export default function ActionButtons({messyText, cleanText}: {messyText: String, cleanText: (newText: string) => void}) {
+export default function ActionButtons({messyText, cleanText}: {messyText: string, cleanText: (newText: string) => void}) {
 
     const removeExtraSpaces = (): void => {
         let splitMessyText = messyText.split(" ");
@@ -16,12 +16,26 @@ export default function ActionButtons({messyText, cleanText}: {messyText: String
         cleanText(rejoinedText)
     }
 
+    const removeLineBreaks = (): void => {
+        var match = /\r|\n/.exec(messyText);
+        if (match) {
+            let splitMessyText = messyText.split(match[0]);
+            let filteredText = splitMessyText.filter(ele => ele !== "");
+            let rejoinedText = filteredText.join(" ");
+            cleanText(rejoinedText)
+        }
+    }
+
+    const changeCasing = (): void => {
+        const isUpperCase = messyText === messyText.toUpperCase();
+        cleanText(isUpperCase ? messyText.toLowerCase() : messyText.toUpperCase())
+    }
+
     const renderButtons = (): ReactNode => {
         const actionButtons: ActionButton[] = [
-            {label: "", icon: <PiArrowsInLineHorizontal size={32} color="#00F" />, buttonAction: removeExtraSpaces},
-            {label: "", icon: <PiArrowsInLineHorizontal size={32} color="#00F" />, buttonAction: removeExtraSpaces},
-            {label: "", icon: <PiArrowsInLineHorizontal size={32} color="#00F" />, buttonAction: removeExtraSpaces},
-            {label: "", icon: <PiArrowsInLineHorizontal size={32} color="#00F" />, buttonAction: removeExtraSpaces},
+            {label: "Remove Extra Spaces", icon: <PiArrowsInLineHorizontal size={32} color="#00F" />, buttonAction: removeExtraSpaces},
+            {label: "Remove Line Breaks", icon: <PiArrowsInLineVertical size={32} color="#00F" />, buttonAction: removeLineBreaks},
+            {label: "Change Casing", icon: <PiTextAa size={32} color="#00F" />, buttonAction: changeCasing},
         ]
         return actionButtons.map((actionButtonInfo, i) => {
             const {label, icon, buttonAction} = actionButtonInfo

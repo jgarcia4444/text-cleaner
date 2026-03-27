@@ -14,13 +14,13 @@ export default function Home() {
   return (
     <div className="flex flex-row w-full h-screen items-center justify-between">
       <div className="w-2/5 h-1/2 flex items-center justify-center px-4">
-        <textarea onChange={(e) => setMessyText(e.target.value)} className="border-2 border-white rounded w-full h-full text-white font-bold" name="input-text" id="input-text" value={messyText} />
+        <textarea onChange={(e) => setMessyText(e.target.value)} className="border-2 border-white rounded w-full h-full text-white font-bold p-2" name="input-text" id="input-text" value={messyText} />
       </div>
       <div className="w-1/5">
         <ActionButtons messyText={messyText} cleanText={handleCleanText} />
       </div>
       <div className="w-2/5 h-1/2 flex items-center justify-center px-4">
-        <textarea className="border-2 border-white rounded w-full h-full" name="output-text" id="output-text" value={cleanedText} />
+        <textarea readOnly className="border-2 border-white rounded w-full h-full p-2" name="output-text" id="output-text" value={cleanedText} />
       </div>
     </div>
   );
